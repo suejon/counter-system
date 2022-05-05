@@ -1,6 +1,10 @@
 import asyncio
 import websockets
 from enum import Enum
+import os
+
+hostname = os.environ.get('HOSTNAME', 'localhost')
+port = os.environ.get('PORT', 2345)
 
 # constants
 LIMIT = 100
@@ -47,6 +51,8 @@ async def handle_message(websocket):
             print(f'status not recognised stopping...')
 
 async def main():
-    async with websockets.serve(handle_message, "localhost", 2345):
+    async with websockets.serve(handle_message, hostname, port):
         await asyncio.Future()
+
+print('Starting backend')
 asyncio.run(main())

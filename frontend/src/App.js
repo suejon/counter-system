@@ -2,6 +2,9 @@ import './App.css';
 import { Button, ButtonGroup, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 
+const router_hostname = process.env.REACT_APP_ROUTER_HOSTNAME || 'localhost'
+const router_port = process.env.REACT_APP_ROUTER_PORT || 1234
+
 const Action = {
   Start: 'START',
   Pause: 'PAUSE',
@@ -17,7 +20,7 @@ const Label = {
 }
 
 const LIMIT = 100
-const conn = new WebSocket("ws://localhost:1234");
+const conn = new WebSocket(`ws://${router_hostname}:${router_port}`);
 
 const handleAction = (set, action) => {
   console.log('handling action:', action)

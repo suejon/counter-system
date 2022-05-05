@@ -1,0 +1,30 @@
+services:
+  frontend:
+    hostname: frontend
+    build:
+      context: frontend
+      args:
+        - ROUTER_HOSTNAME=localhost
+        - ROUTER_PORT=1234
+    ports:
+      - "3000:3000"
+    depends_on:
+      - router
+  router:
+    hostname: router
+    environment:
+      - SERVER_PORT=1234
+      - BACKEND_PORT=2345
+      - BACKEND_HOSTNAME=backend
+    build: router
+    ports:
+      - "1234:1234"
+    depends_on:
+      - backend
+  backend:
+    hostname: backend
+    environment:
+      - REACT_APP_ROUTER_HOSTNAME=backend
+      - REACT_APP_ROUTER_PORT=2345
+      - PYTHONUNBUFFERED=1
+    build: backend
